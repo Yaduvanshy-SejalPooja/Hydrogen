@@ -66,7 +66,7 @@ export default function Homepage() {
   const data = useLoaderData();
   return (
     <div className="home">
-      {/* {data.isShopLinkedddd ? null : <MockShopNotice />} */}
+      {/* {data.isShopLinked ? null : <MockShopNotice />} */}
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
@@ -111,7 +111,7 @@ function RecommendedProducts({products}) {
       className="recommended-products"
       aria-labelledby="recommended-products"
     >
-      <h2 id="recommended-products">Recommended Products</h2>
+      <h2 id="recommended-products">Recommended Products rrr</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (

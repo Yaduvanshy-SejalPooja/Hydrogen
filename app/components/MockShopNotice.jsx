@@ -1,20 +1,26 @@
-export function MockShopNotice() {
-  return (
-    <section
-      className="mock-shop-notice"
-      aria-labelledby="mock-shop-notice-heading"
-    >
-      <div className="inner">
-        <h2 id="mock-shop-notice-heading">Welcome to Hydrogen!</h2>
-        <p>
-          You&rsquo;re seeing mocked products because no store is connected to
-          this project yet.
-        </p>
-        <p>
-          Link a store by running <code>npx shopify hydrogen link</code> in your
-          terminal.
-        </p>
-      </div>
-    </section>
-  );
+import {useLoaderData} from '@shopify/remix-oxygen';
+
+export async function loader({params, context}) {
+  const {handle} = params;
+  const {storefront} = context;
+  const {product} = await storefront.query(PRODUCT_QUERY, {
+    variables: {handle},
+    // Pass a `cache` option with your query to customize API request caching.
+    cache: storefront.CacheLong()
+  });
+  return {product};
 }
+
+export default function Product() {
+  const {product} = useLoaderData();
+  return (
+    <h1>{product.title}</h1>
+  )
+}
+
+const PRODUCT_QUERY = `#graphql
+  product(handle: $handle) {
+    id
+    title
+    
+  }`
